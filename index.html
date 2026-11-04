@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fashion Post Corporation — карго-доставка и заказ товаров из США, Китая, Европы, Кореи и Японии в Семей и по Казахстану.">
+  <title>Fashion Post Corporation — карго и брендовые заказы</title>
+  <style>
+    :root { color-scheme:light; --pink:#df438c; --pink-dark:#b9286c; --pale:#fff0f7; --ink:#302433; --muted:#685d68; --border:#f6d8e7; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:90px; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; background:#fffafd; color:var(--ink); line-height:1.65; }
+
+    .navbar { position:fixed; top:0; left:0; width:100%; z-index:1000; background:rgba(255,250,253,.97); border-bottom:1px solid var(--border); box-shadow:0 3px 15px rgba(147,45,92,.07); }
+    .nav-container { width:min(1100px,calc(100% - 36px)); min-height:76px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .logo { color:var(--pink-dark); font-size:20px; font-weight:800; text-decoration:none; line-height:1.2; white-space:nowrap; }
+    .nav-links { display:flex; align-items:center; gap:25px; }
+    .nav-links a { color:var(--ink); text-decoration:none; font-weight:700; transition:color .2s; }
+    .nav-links a:hover { color:var(--pink); }
+    .burger { display:none; width:44px; height:44px; border:1px solid var(--border); border-radius:12px; background:white; cursor:pointer; padding:10px; flex-direction:column; justify-content:center; gap:5px; }
+    .burger span { display:block; width:22px; height:2px; background:var(--pink-dark); border-radius:2px; transition:transform .2s,opacity .2s; }
+    .burger.active span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .burger.active span:nth-child(2) { opacity:0; }
+    .burger.active span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+    .container { width:min(1100px,calc(100% - 36px)); margin:0 auto; }
+    section { padding:82px 0; scroll-margin-top:90px; }
+    section:nth-of-type(even) { background:#fff2f8; }
+    .hero { min-height:76vh; display:flex; align-items:center; color:#fff; background:linear-gradient(rgba(0,0,0,.58),rgba(0,0,0,.58)),url('hero-background.png') center/cover no-repeat; }
+    .eyebrow { color:var(--pink-dark); text-transform:uppercase; letter-spacing:.14em; font-weight:800; font-size:13px; }
+    h1,h2,h3 { line-height:1.16; margin:0 0 22px; }
+    h1 { font-size:clamp(42px,7vw,86px); letter-spacing:-.055em; overflow-wrap:anywhere; }
+    h2 { font-size:clamp(34px,5vw,58px); letter-spacing:-.035em; }
+    h3 { font-size:25px; }
+    p { margin:0 0 16px; }
+    .lead { font-size:clamp(18px,2.5vw,23px); max-width:760px; }
+    .buttons { display:flex; gap:12px; flex-wrap:wrap; margin-top:30px; }
+    .button { display:inline-flex; align-items:center; justify-content:center; padding:15px 25px; border-radius:999px; background:var(--pink); color:white; font-weight:700; text-decoration:none; transition:background .2s,transform .2s; text-align:center; border:0; cursor:pointer; font-size:16px; }
+    .button:hover { background:var(--pink-dark); transform:translateY(-2px); }
+    .button.secondary { background:white; color:var(--pink-dark); border:2px solid #edb0d0; }
+    .button.secondary:hover { background:#ffeaf4; }
+    .intro { max-width:750px; margin-bottom:30px; }
+    .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; margin:28px 0; }
+    .card { background:#fff; border:1px solid var(--border); border-radius:22px; padding:28px; box-shadow:0 10px 30px rgba(147,45,92,.05); }
+    .price { font-size:28px; color:var(--pink-dark); font-weight:800; margin:12px 0; }
+    .placeholder { border:2px dashed #e9a1c4; border-radius:24px; padding:32px; background:#fffafd; }
+    .fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:24px 0; }
+    .field { padding:18px; border:1px solid var(--border); background:white; border-radius:14px; color:var(--muted); }
+    .advantages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin:26px 0; }
+    .advantage { background:white; padding:24px; border-radius:18px; border:1px solid var(--border); }
+    .advantage strong { color:var(--pink-dark); display:block; font-size:19px; margin-bottom:8px; }
+    .contact { background:white; border:1px solid var(--border); padding:28px; border-radius:22px; max-width:650px; }
+    a:not(.button) { color:var(--pink-dark); overflow-wrap:anywhere; }
+    footer { padding:28px 0; text-align:center; color:var(--muted); font-size:14px; }
+
+    /* Калькулятор */
+    .calculator-card { max-width:760px; margin:30px auto 0; background:white; border:1px solid var(--border); border-radius:24px; padding:clamp(22px,5vw,38px); box-shadow:0 10px 30px rgba(147,45,92,.06); }
+    .calc-group { margin-bottom:22px; }
+    .calc-label { display:block; font-weight:800; margin-bottom:9px; }
+    .calc-input { display:block; width:100%; min-height:56px; padding:14px 16px; border:1px solid #edc9da; border-radius:13px; background:#fffafd; color:var(--ink); font-size:17px; outline:none; }
+    .calc-input:focus { border-color:var(--pink); box-shadow:0 0 0 3px rgba(223,67,140,.12); }
+    .calc-hint { color:var(--muted); font-size:14px; margin-top:7px; }
+    .calc-total { margin-top:28px; padding:26px; border-radius:19px; background:#fff0f7; text-align:center; }
+    .calc-total-label { font-weight:700; color:var(--muted); margin-bottom:8px; }
+    .calc-total-value { color:var(--pink-dark); font-size:clamp(34px,7vw,52px); font-weight:900; line-height:1.2; overflow-wrap:anywhere; }
+    .calc-selected { margin-top:18px; padding:17px; border-radius:14px; background:#fff; border:1px solid var(--border); text-align:left; }
+    .calc-selected strong { color:var(--pink-dark); }
+    .calc-unavailable { display:none; margin-top:15px; color:var(--pink-dark); font-weight:700; }
+
+    /* Квиз */
+    .quiz-wrap { max-width:760px; margin:32px auto 0; }
+    .quiz-card { background:#fff; border:1px solid var(--border); border-radius:24px; padding:clamp(22px,5vw,38px); box-shadow:0 10px 30px rgba(147,45,92,.06); }
+    .quiz-progress { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:14px; color:var(--pink-dark); font-weight:800; font-size:15px; }
+    .progress-track { height:8px; background:#fce3ef; border-radius:20px; overflow:hidden; margin-bottom:30px; }
+    .progress-fill { height:100%; width:33.333%; background:var(--pink); border-radius:20px; transition:width .3s; }
+    .quiz-question { font-size:clamp(23px,4vw,30px); margin-bottom:24px; }
+    .quiz-answers { display:grid; gap:13px; }
+    .quiz-answer { width:100%; min-height:64px; padding:17px 20px; border:2px solid var(--border); border-radius:16px; background:#fffafd; color:var(--ink); text-align:left; font-size:17px; font-weight:700; cursor:pointer; transition:border-color .2s,background .2s,transform .2s; }
+    .quiz-answer:hover { border-color:var(--pink); background:#fff0f7; transform:translateY(-2px); }
+    .quiz-result { display:none; background:#fff; border:2px solid #edb0d0; border-radius:24px; padding:clamp(24px,5vw,40px); box-shadow:0 10px 30px rgba(147,45,92,.07); }
+    .quiz-result h3 { color:var(--pink-dark); font-size:clamp(25px,4vw,34px); margin-bottom:15px; }
+    .result-price { color:var(--pink-dark); font-size:clamp(23px,4vw,30px); font-weight:800; margin:15px 0; }
+    .result-reason { background:#fff2f8; border-radius:16px; padding:20px; margin:20px 0; }
+
+    @media(max-width:760px) {
+      .nav-container { min-height:68px; }
+      .logo { font-size:17px; }
+      .burger { display:flex; }
+      .nav-links { display:none; position:absolute; top:68px; left:0; width:100%; padding:14px 18px 20px; background:#fffafd; border-bottom:1px solid var(--border); box-shadow:0 8px 15px rgba(147,45,92,.08); flex-direction:column; align-items:stretch; gap:0; }
+      .nav-links.open { display:flex; }
+      .nav-links a { display:block; padding:13px 10px; border-bottom:1px solid var(--border); }
+      .nav-links a:last-child { border-bottom:none; }
+    }
+    @media(max-width:700px) {
+      section { padding:58px 0; }
+      .hero { min-height:70vh; background-position:68% center; }
+      .cards,.advantages,.fields { grid-template-columns:1fr; }
+      .card,.placeholder,.contact { padding:22px; }
+      .buttons .button { width:100%; }
+      .quiz-answer { min-height:68px; padding:18px; font-size:17px; }
+      .quiz-card { padding:22px; }
+      .quiz-result .button { width:100%; }
+      .calculator-card { padding:22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#home" class="logo">Fashion Post Corporation</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#services">Услуги</a>
+        <a href="#calculator">Калькулятор</a>
+        <a href="#quiz">Подбор</a>
+        <a href="#about">О нас</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <h1>Ваши покупки со всего мира в Казахстан</h1>
+        <p class="lead">Покупайте товары в зарубежных магазинах, а доставку доверьте Fashion Post Corporation. Узнавайте тарифы и условия перевозки до оформления заказа.</p>
+        <div class="buttons">
+          <a class="button" href="#calculator">Рассчитать стоимость</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <p class="eyebrow">Наши направления</p>
+        <h2>Услуги и цены</h2>
+        <div class="intro">
+          <h3>Международная доставка товаров</h3>
+          <p>Доставляем ваши покупки из зарубежных магазинов в Казахстан. Выбирайте направление и узнавайте стоимость доставки.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <h3>1. Карго из Китая</h3>
+            <p class="price">4,1 $/кг</p>
+            <p>Шаг расчета веса — 100 г.</p>
+            <p>Для оптовых клиентов тариф — уточнить.</p>
+          </article>
+          <article class="card">
+            <h3>2. Карго из США</h3>
+            <p class="price">17 $/кг</p>
+            <p>Шаг расчета веса — 100 г.</p>
+            <p>Оплата в тенге по курсу — уточнить.</p>
+            <p>Для оптовых клиентов тариф — уточнить.</p>
+          </article>
+          <article class="card">
+            <h3>3. Карго из Европы, Кореи и Японии</h3>
+            <p>Заказывайте товары из зарубежных магазинов с доставкой в Казахстан.</p>
+            <p>Тарифы и сроки — уточнить.</p>
+            <p>Для оптовых клиентов условия уточняются индивидуально.</p>
+          </article>
+          <article class="card">
+            <h3>4. Услуга байера</h3>
+            <p>Помощь с покупкой товаров из зарубежных магазинов.</p>
+            <p class="price">Комиссия — 15%</p>
+            <p>От стоимости товара.</p>
+            <p>Условия услуги — уточнить.</p>
+          </article>
+        </div>
+        <a class="button" href="https://wa.me/77051624947?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%80%D0%B0%D1%81%D1%81%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C%20%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D1%83." target="_blank" rel="noopener noreferrer">Рассчитать доставку</a>
+      </div>
+    </section>
+
+    <!-- Калькулятор стоимости -->
+    <section id="calculator">
+      <div class="container">
+        <p class="eyebrow">Быстрый расчет</p>
+        <h2>Калькулятор стоимости</h2>
+        <p class="intro">Выберите услугу, укажите вес или стоимость товара. Итог пересчитывается автоматически.</p>
+
+        <div class="calculator-card">
+          <div class="calc-group">
+            <label class="calc-label" for="calcService">Выберите услугу</label>
+            <select class="calc-input" id="calcService">
+              <option value="china">Карго из Китая — 4,1 $/кг</option>
+              <option value="usa">Карго из США — 17 $/кг</option>
+              <option value="other">Европа, Корея, Япония — уточнить</option>
+              <option value="buyer">Услуга байера — 15%</option>
+            </select>
+          </div>
+
+          <div class="calc-group" id="quantityGroup">
+            <label class="calc-label" id="quantityLabel" for="calcQuantity">Вес товара, кг</label>
+            <input class="calc-input" id="calcQuantity" type="number" min="0" step="0.1" value="1" placeholder="Введите вес">
+            <p class="calc-hint" id="quantityHint">Шаг расчета веса — 100 г. Пустое поле считается за 0.</p>
+          </div>
+
+          <div class="calc-group" id="rateGroup">
+            <label class="calc-label" for="calcRate">Курс доллара к тенге</label>
+            <input class="calc-input" id="calcRate" type="number" min="0" step="0.01" placeholder="Введите актуальный курс">
+            <p class="calc-hint">Введите курс доллара, по которому хотите рассчитать стоимость. Курс не загружается автоматически.</p>
+          </div>
+
+          <div class="calc-group" id="buyerGroup" style="display:none;">
+            <label class="calc-label" for="buyerAmount">Стоимость товара, ₸</label>
+            <input class="calc-input" id="buyerAmount" type="number" min="0" step="1" placeholder="Введите стоимость товара">
+            <p class="calc-hint">Комиссия байера составляет 15% от стоимости товара.</p>
+          </div>
+
+          <div class="calc-unavailable" id="calcUnavailable">
+            Для этого направления тариф нужно уточнить у менеджера. Для оптовых клиентов стоимость рассчитывается индивидуально.
+          </div>
+
+          <div class="calc-total">
+            <p class="calc-total-label">Примерная стоимость</p>
+            <div class="calc-total-value" id="calcTotal" aria-live="polite">0 Т.</div>
+            <div class="calc-selected">
+              <strong>Что выбрано:</strong>
+              <p id="calcDetails">Карго из Китая · 1 кг · тариф 4,1 $/кг. Введите курс доллара для расчета.</p>
+            </div>
+          </div>
+
+          <p class="calc-hint" style="margin-top:18px;">Расчет предварительный. Итоговую стоимость и оптовые условия уточняйте у менеджера.</p>
+          <a class="button" style="margin-top:18px;" id="calcWhatsApp" href="https://wa.me/77051624947" target="_blank" rel="noopener noreferrer">Уточнить стоимость в WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Квиз -->
+    <section id="quiz">
+      <div class="container">
+        <p class="eyebrow">Персональный подбор</p>
+        <h2>Подобрать услугу</h2>
+        <p class="intro">Ответьте на три простых вопроса, и мы подскажем, какая услуга подойдет вам лучше всего.</p>
+        <div class="quiz-wrap">
+          <div class="quiz-card" id="quizCard">
+            <div class="quiz-progress">
+              <span id="questionCounter">Вопрос 1 из 3</span>
+              <span id="progressPercent">33%</span>
+            </div>
+            <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+            <h3 class="quiz-question" id="questionText">Откуда вы хотите доставить товар?</h3>
+            <div class="quiz-answers" id="answerButtons"></div>
+          </div>
+          <div class="quiz-result" id="quizResult" aria-live="polite">
+            <p class="eyebrow">Ваш результат</p>
+            <h3 id="resultTitle">Вам подходит: Карго из Китая</h3>
+            <p class="result-price" id="resultPrice"></p>
+            <div class="result-reason">
+              <strong>Почему подходит:</strong>
+              <p id="resultReason"></p>
+            </div>
+            <p>Хотите уточнить детали и оформить заказ? Напишите нам в WhatsApp.</p>
+            <div class="buttons">
+              <a class="button" id="resultWhatsApp" href="https://wa.me/77051624947" target="_blank" rel="noopener noreferrer">Уточнить в WhatsApp</a>
+              <button class="button secondary" id="restartQuiz" type="button">Пройти заново</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <p class="eyebrow">Наш подход</p>
+        <h2>О нас</h2>
+        <h3>Fashion Post Corporation — ваш помощник в международных покупках</h3>
+        <p>Помогаем заказывать товары из Китая, Америки, Европы, Кореи и Японии с доставкой по Казахстану.</p>
+        <p>Наши приоритеты — быстрая доставка, выгодные тарифы и надежность.</p>
+        <p>Мы стремимся сделать зарубежные покупки удобными и понятными для каждого клиента.</p>
+        <div class="advantages">
+          <div class="advantage"><strong>Быстрая доставка</strong><p>Сроки по направлениям — уточнить.</p></div>
+          <div class="advantage"><strong>Выгодные цены</strong><p>Понятные тарифы на доставку и услуги байера.</p></div>
+          <div class="advantage"><strong>Надежность</strong><p>Условия доставки и отслеживания посылок — уточнить.</p></div>
+        </div>
+        <a class="button" href="https://wa.me/77051624947?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%82%D1%8C%20%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81." target="_blank" rel="noopener noreferrer">Задать вопрос</a>
+      </div>
+    </section>
+
+    <section id="contacts">
+      <div class="container">
+        <p class="eyebrow">Мы на связи</p>
+        <h2>Контакты</h2>
+        <h3>Готовы заказать товар из-за границы?</h3>
+        <p>Напишите нам, и мы поможем разобраться с условиями покупки и доставки.</p>
+        <p>Расскажите, какой товар хотите заказать и из какой страны. Мы уточним стоимость и условия доставки.</p>
+        <div class="contact">
+          <p><strong>WhatsApp:</strong> <a href="https://wa.me/77051624947" target="_blank" rel="noopener noreferrer">+7 705 162 49 47</a></p>
+          <p><strong>Телефон:</strong> +7 705 162 49 47</p>
+          <p><strong>Instagram:</strong> <a href="https://www.instagram.com/aigerima_askarbekovna/" target="_blank" rel="noopener noreferrer">@aigerima_askarbekovna</a></p>
+          <p><strong>Адрес в Семее:</strong> уточнить.</p>
+          <p><strong>Режим работы:</strong> уточнить.</p>
+          <div class="buttons">
+            <a class="button" href="https://wa.me/77051624947?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%20%D1%87%D0%B5%D1%80%D0%B5%D0%B7%20Fashion%20Post%20Corporation.%20%D0%9F%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D0%B6%D0%B8%D1%82%D0%B5%2C%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0%2C%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C%20%D0%B8%20%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F%20%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B8." target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container">Fashion Post Corporation · Семей · Казахстан</div></footer>
+
+  <script>
+    // Мобильное меню
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('navLinks');
+
+    burger.addEventListener('click', function () {
+      const isOpen = navLinks.classList.toggle('open');
+      burger.classList.toggle('active', isOpen);
+      burger.setAttribute('aria-expanded', isOpen);
+      burger.setAttribute('aria-label', isOpen ? 'Закрыть меню' : 'Открыть меню');
+    });
+
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navLinks.classList.remove('open');
+        burger.classList.remove('active');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.setAttribute('aria-label', 'Открыть меню');
+      });
+    });
+
+    // Калькулятор стоимости
+    const calcService = document.getElementById('calcService');
+    const calcQuantity = document.getElementById('calcQuantity');
+    const calcRate = document.getElementById('calcRate');
+    const buyerAmount = document.getElementById('buyerAmount');
+    const quantityLabel = document.getElementById('quantityLabel');
+    const quantityHint = document.getElementById('quantityHint');
+    const quantityGroup = document.getElementById('quantityGroup');
+    const rateGroup = document.getElementById('rateGroup');
+    const buyerGroup = document.getElementById('buyerGroup');
+    const calcTotal = document.getElementById('calcTotal');
+    const calcDetails = document.getElementById('calcDetails');
+    const calcUnavailable = document.getElementById('calcUnavailable');
+    const calcWhatsApp = document.getElementById('calcWhatsApp');
+
+    const cargoRates = {
+      china: 4.1,
+      usa: 17
+    };
+
+    function numberValue(input) {
+      const value = parseFloat(input.value);
+      return Number.isFinite(value) && value > 0 ? value : 0;
+    }
+
+    function formatTenge(value) {
+      return Math.round(value).toLocaleString('ru-RU').replace(/\u00a0/g, ' ') + ' Т.';
+    }
+
+    function updateCalculator() {
+      const service = calcService.value;
+      let total = 0;
+      let details = '';
+      let message = '';
+      let unavailable = false;
+
+      calcUnavailable.style.display = 'none';
+      quantityGroup.style.display = 'block';
+      rateGroup.style.display = 'block';
+      buyerGroup.style.display = 'none';
+
+      if (service === 'china' || service === 'usa') {
+        const kg = numberValue(calcQuantity);
+        const rate = numberValue(calcRate);
+        const price = cargoRates[service];
+        const name = service === 'china' ? 'Карго из Китая' : 'Карго из США';
+        const currency = service === 'china' ? '4,1 $/кг' : '17 $/кг';
+
+        quantityLabel.textContent = 'Вес товара, кг';
+        quantityHint.textContent = 'Шаг расчета веса — 100 г. Пустое поле считается за 0.';
+
+        total = kg * price * rate;
+
+        details = name + ' · ' + kg + ' кг · тариф ' + currency +
+          (rate > 0 ? ' · курс ' + rate.toLocaleString('ru-RU') + ' ₸/$' : ' · курс доллара не указан');
+
+        message = 'Здравствуйте! Хочу рассчитать доставку: ' + name +
+          '. Вес: ' + kg + ' кг. Тариф: ' + currency +
+          '. Курс доллара: ' + (rate || 'не указан') + '. Подскажите итоговую стоимость.';
+
+      } else if (service === 'buyer') {
+        const amount = numberValue(buyerAmount);
+
+        quantityGroup.style.display = 'none';
+        rateGroup.style.display = 'none';
+        buyerGroup.style.display = 'block';
+
+        total = amount * 0.15;
+        details = 'Услуга байера · стоимость товара: ' +
+          formatTenge(amount) + ' · комиссия: 15%';
+
+        message = 'Здравствуйте! Хочу воспользоваться услугой байера. Стоимость товара: ' +
+          formatTenge(amount) + '. Подскажите подробности.';
+
+      } else {
+        quantityLabel.textContent = 'Вес товара, кг';
+        quantityHint.textContent = 'Тариф для этого направления уточняется.';
+        unavailable = true;
+        calcUnavailable.style.display = 'block';
+        total = 0;
+
+        details = 'Карго из Европы, Кореи или Японии · тариф уточняется индивидуально.';
+        message = 'Здравствуйте! Хочу узнать тарифы и условия доставки из Европы, Кореи или Японии.';
+      }
+
+      if (unavailable) {
+        calcTotal.textContent = 'Уточнить';
+      } else {
+        calcTotal.textContent = formatTenge(total);
+      }
+
+      calcDetails.textContent = details;
+      calcWhatsApp.href = 'https://wa.me/77051624947?text=' + encodeURIComponent(message);
+    }
+
+    [calcService, calcQuantity, calcRate, buyerAmount].forEach(function (element) {
+      element.addEventListener('input', updateCalculator);
+      element.addEventListener('change', updateCalculator);
+    });
+
+    updateCalculator();
+
+    // Квиз: подбор услуги
+    const services = {
+      china: {
+        name: 'Карго из Китая',
+        price: '4,1 $/кг',
+        reason: 'Вы хотите доставить покупки из Китая. Для этого направления предусмотрена карго-доставка по тарифу 4,1 $ за килограмм. Для оптовых клиентов тариф уточняется индивидуально.'
+      },
+      usa: {
+        name: 'Карго из США',
+        price: '17 $/кг',
+        reason: 'Ваши ответы указывают на доставку товаров из Америки. Тариф составляет 17 $ за килограмм. Оплата в тенге рассчитывается по курсу, который нужно уточнить.'
+      },
+      other: {
+        name: 'Карго из Европы, Кореи и Японии',
+        price: 'Тариф уточнить',
+        reason: 'Вам нужна доставка из Европы, Кореи или Японии. Мы поможем уточнить тариф, сроки и условия перевозки. Для оптовых клиентов стоимость рассчитывается индивидуально.'
+      },
+      buyer: {
+        name: 'Услуга байера',
+        price: 'Комиссия 15% от стоимости товара',
+        reason: 'Вам удобнее поручить покупку специалисту. Байер поможет с заказом товара в зарубежном магазине. Комиссия составляет 15% от стоимости товара.'
+      }
+    };
+
+    const questions = [
+      {
+        text: 'Из какой страны вы хотите заказать товар?',
+        answers: [
+          { text: 'Из Китая', service: 'china' },
+          { text: 'Из США (Америки)', service: 'usa' },
+          { text: 'Из Европы, Кореи или Японии', service: 'other' },
+          { text: 'Пока не определился(ась), нужна помощь с покупкой', service: 'buyer' }
+        ]
+      },
+      {
+        text: 'Какая помощь вам нужна?',
+        answers: [
+          { text: 'Только доставить уже купленный товар из Китая', service: 'china' },
+          { text: 'Доставить покупку из американского магазина', service: 'usa' },
+          { text: 'Организовать доставку из другой страны', service: 'other' },
+          { text: 'Помочь выбрать и купить товар за меня', service: 'buyer' }
+        ]
+      },
+      {
+        text: 'Что для вас сейчас важнее всего?',
+        answers: [
+          { text: 'Доставка покупок из Китая', service: 'china' },
+          { text: 'Получить заказ из США', service: 'usa' },
+          { text: 'Привезти товары из Европы, Кореи или Японии', service: 'other' },
+          { text: 'Не разбираться с покупкой самостоятельно', service: 'buyer' }
+        ]
+      }
+    ];
+
+    let currentQuestion = 0;
+    let votes = { china:0, usa:0, other:0, buyer:0 };
+
+    const quizCard = document.getElementById('quizCard');
+    const quizResult = document.getElementById('quizResult');
+    const questionCounter = document.getElementById('questionCounter');
+    const progressPercent = document.getElementById('progressPercent');
+    const progressFill = document.getElementById('progressFill');
+    const questionText = document.getElementById('questionText');
+    const answerButtons = document.getElementById('answerButtons');
+
+    function showQuestion() {
+      const question = questions[currentQuestion];
+      const number = currentQuestion + 1;
+      const percent = Math.round(number / questions.length * 100);
+
+      questionCounter.textContent = 'Вопрос ' + number + ' из ' + questions.length;
+      progressPercent.textContent = percent + '%';
+      progressFill.style.width = percent + '%';
+      questionText.textContent = question.text;
+      answerButtons.innerHTML = '';
+
+      question.answers.forEach(function (answer) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'quiz-answer';
+        button.textContent = answer.text;
+
+        button.addEventListener('click', function () {
+          votes[answer.service]++;
+
+          if (currentQuestion < questions.length - 1) {
+            currentQuestion++;
+            showQuestion();
+          } else {
+            showResult();
+          }
+        });
+
+        answerButtons.appendChild(button);
+      });
+    }
+
+    function showResult() {
+      let maxVotes = Math.max(...Object.values(votes));
+      const leaders = Object.keys(votes).filter(function (key) {
+        return votes[key] === maxVotes;
+      });
+
+      // При равенстве голосов выбирается услуга байера
+      const winner = leaders.length > 1 ? 'buyer' : leaders[0];
+      const service = services[winner];
+
+      document.getElementById('resultTitle').textContent =
+        'Вам подходит: ' + service.name;
+      document.getElementById('resultPrice').textContent = service.price;
+      document.getElementById('resultReason').textContent = service.reason;
+
+      const message = 'Здравствуйте! Я прошел(а) подбор услуг на сайте Fashion Post Corporation. Мне подходит: ' +
+        service.name + '. Подскажите, пожалуйста, подробности и условия.';
+
+      document.getElementById('resultWhatsApp').href =
+        'https://wa.me/77051624947?text=' + encodeURIComponent(message);
+
+      quizCard.style.display = 'none';
+      quizResult.style.display = 'block';
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      votes = { china:0, usa:0, other:0, buyer:0 };
+      quizResult.style.display = 'none';
+      quizCard.style.display = 'block';
+      showQuestion();
+    }
+
+    document.getElementById('restartQuiz').addEventListener('click', restartQuiz);
+
+    showQuestion();
+  </script>
+
+</body>
+</html>
