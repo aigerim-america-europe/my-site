@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Fashion Post Corporation — карго-доставка и заказ товаров из США, Китая, Европы, Кореи и Японии в Семей и по Казахстану.">
-  <title>Fashion Post Corporation — карго и брендовые заказы</title>
+  <meta name="description" content="Fashion Post Corporation — логистика и заказ товаров из США, Китая, Европы, Кореи и Японии в Семей и по Казахстану.">
+  <title>Fashion Post Corporation — логистика и брендовые заказы</title>
   <style>
     :root { color-scheme:light; --pink:#df438c; --pink-dark:#b9286c; --pale:#fff0f7; --ink:#302433; --muted:#685d68; --border:#f6d8e7; }
     * { box-sizing:border-box; }
@@ -40,6 +39,10 @@
     .button:hover { background:var(--pink-dark); transform:translateY(-2px); }
     .button.secondary { background:white; color:var(--pink-dark); border:2px solid #edb0d0; }
     .button.secondary:hover { background:#ffeaf4; }
+    .button.whatsapp { background:#25a244; color:#fff; }
+    .button.whatsapp:hover { background:#1d8738; }
+    .button.telegram { background:#0088cc; color:#fff; }
+    .button.telegram:hover { background:#006699; }
     .intro { max-width:750px; margin-bottom:30px; }
     .cards { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; margin:28px 0; }
     .card { background:#fff; border:1px solid var(--border); border-radius:22px; padding:28px; box-shadow:0 10px 30px rgba(147,45,92,.05); }
@@ -116,7 +119,7 @@
       <nav class="nav-links" id="navLinks">
         <a href="#services">Услуги</a>
         <a href="#calculator">Калькулятор</a>
-        <a href="#quiz">Подбор</a>
+        <a href="#quiz" id="navQuizLink">Подбор</a>
         <a href="#about">О нас</a>
         <a href="#contacts">Контакты</a>
       </nav>
@@ -129,7 +132,7 @@
         <h1>Ваши покупки со всего мира в Казахстан</h1>
         <p class="lead">Покупайте товары в зарубежных магазинах, а доставку доверьте Fashion Post Corporation. Узнавайте тарифы и условия перевозки до оформления заказа.</p>
         <div class="buttons">
-          <a class="button" href="#calculator">Рассчитать стоимость</a>
+          <a class="button" href="#calculator">Калькулятор стоимости</a>
         </div>
       </div>
     </section>
@@ -144,20 +147,20 @@
         </div>
         <div class="cards">
           <article class="card">
-            <h3>1. Карго из Китая</h3>
+            <h3>1. Логистика из Китая</h3>
             <p class="price">4,1 $/кг</p>
             <p>Шаг расчета веса — 100 г.</p>
             <p>Для оптовых клиентов тариф — уточнить.</p>
           </article>
           <article class="card">
-            <h3>2. Карго из США</h3>
+            <h3>2. Логистика из США</h3>
             <p class="price">17 $/кг</p>
             <p>Шаг расчета веса — 100 г.</p>
             <p>Оплата в тенге по курсу — уточнить.</p>
             <p>Для оптовых клиентов тариф — уточнить.</p>
           </article>
           <article class="card">
-            <h3>3. Карго из Европы, Кореи и Японии</h3>
+            <h3>3. Логистика из Европы, Кореи и Японии</h3>
             <p>Заказывайте товары из зарубежных магазинов с доставкой в Казахстан.</p>
             <p>Тарифы и сроки — уточнить.</p>
             <p>Для оптовых клиентов условия уточняются индивидуально.</p>
@@ -170,7 +173,7 @@
             <p>Условия услуги — уточнить.</p>
           </article>
         </div>
-        <a class="button" href="https://wa.me/77051624947?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%80%D0%B0%D1%81%D1%81%D1%87%D0%B8%D1%82%D0%B0%D1%82%D1%8C%20%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D1%83." target="_blank" rel="noopener noreferrer">Рассчитать доставку</a>
+        <a class="button" href="#calculator">Калькулятор стоимости</a>
       </div>
     </section>
 
@@ -185,8 +188,8 @@
           <div class="calc-group">
             <label class="calc-label" for="calcService">Выберите услугу</label>
             <select class="calc-input" id="calcService">
-              <option value="china">Карго из Китая — 4,1 $/кг</option>
-              <option value="usa">Карго из США — 17 $/кг</option>
+              <option value="china">Логистика из Китая — 4,1 $/кг</option>
+              <option value="usa">Логистика из США — 17 $/кг</option>
               <option value="other">Европа, Корея, Япония — уточнить</option>
               <option value="buyer">Услуга байера — 15%</option>
             </select>
@@ -219,12 +222,15 @@
             <div class="calc-total-value" id="calcTotal" aria-live="polite">0 Т.</div>
             <div class="calc-selected">
               <strong>Что выбрано:</strong>
-              <p id="calcDetails">Карго из Китая · 1 кг · тариф 4,1 $/кг. Введите курс доллара для расчета.</p>
+              <p id="calcDetails">Логистика из Китая · 1 кг · тариф 4,1 $/кг. Введите курс доллара для расчета.</p>
             </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px;">
+              <a class="button telegram" style="flex: 1; min-width: 200px; margin-top: 0;" id="calcTelegram" href="https://t.me/username" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+            </div>
+            <div id="calcTelegramNotice" style="margin-top: 10px; font-size: 14px; color: var(--pink-dark); display: none;">Расчет скопирован - вставьте его в чат</div>
           </div>
 
           <p class="calc-hint" style="margin-top:18px;">Расчет предварительный. Итоговую стоимость и оптовые условия уточняйте у менеджера.</p>
-          <a class="button" style="margin-top:18px;" id="calcWhatsApp" href="https://wa.me/77051624947" target="_blank" rel="noopener noreferrer">Уточнить стоимость в WhatsApp</a>
         </div>
       </div>
     </section>
@@ -247,17 +253,18 @@
           </div>
           <div class="quiz-result" id="quizResult" aria-live="polite">
             <p class="eyebrow">Ваш результат</p>
-            <h3 id="resultTitle">Вам подходит: Карго из Китая</h3>
+            <h3 id="resultTitle">Вам подходит: Логистика из Китая</h3>
             <p class="result-price" id="resultPrice"></p>
             <div class="result-reason">
               <strong>Почему подходит:</strong>
               <p id="resultReason"></p>
             </div>
-            <p>Хотите уточнить детали и оформить заказ? Напишите нам в WhatsApp.</p>
+            <p>Хотите уточнить детали и оформить заказ? Напишите нам в Telegram.</p>
             <div class="buttons">
-              <a class="button" id="resultWhatsApp" href="https://wa.me/77051624947" target="_blank" rel="noopener noreferrer">Уточнить в WhatsApp</a>
+              <a class="button telegram" id="resultTelegram" href="https://t.me/username" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
               <button class="button secondary" id="restartQuiz" type="button">Пройти заново</button>
             </div>
+            <div id="quizTelegramNotice" style="margin-top: 10px; font-size: 14px; color: var(--pink-dark); display: none;">Текст скопирован</div>
           </div>
         </div>
       </div>
@@ -295,7 +302,11 @@
           <p><strong>Режим работы:</strong> уточнить.</p>
           <div class="buttons">
             <a class="button" href="https://wa.me/77051624947?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%20%D1%82%D0%BE%D0%B2%D0%B0%D1%80%20%D1%87%D0%B5%D1%80%D0%B5%D0%B7%20Fashion%20Post%20Corporation.%20%D0%9F%D0%BE%D0%B4%D1%81%D0%BA%D0%B0%D0%B6%D0%B8%D1%82%D0%B5%2C%20%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0%2C%20%D1%81%D1%82%D0%BE%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C%20%D0%B8%20%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F%20%D0%B4%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B8." target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
+            <a class="button secondary" href="[Ссылка из 2ГИС]" target="_blank" rel="noopener noreferrer">Открыть в 2ГИС</a>
           </div>
+        </div>
+        <div style="margin-top: 30px; width: 100%;">
+          <iframe src="https://maps.google.com/maps?q=%D0%A1%D0%B5%D0%BC%D0%B5%D0%B9&z=15&output=embed" width="100%" height="300" style="border:0; border-radius: 22px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
     </section>
@@ -324,6 +335,18 @@
       });
     });
 
+    // Плавный переход для ссылки «Подбор» в шапке
+    const navQuizLink = document.getElementById('navQuizLink');
+    if (navQuizLink) {
+      navQuizLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        const quizSection = document.getElementById('quiz');
+        if (quizSection) {
+          quizSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+
     // Калькулятор стоимости
     const calcService = document.getElementById('calcService');
     const calcQuantity = document.getElementById('calcQuantity');
@@ -337,7 +360,8 @@
     const calcTotal = document.getElementById('calcTotal');
     const calcDetails = document.getElementById('calcDetails');
     const calcUnavailable = document.getElementById('calcUnavailable');
-    const calcWhatsApp = document.getElementById('calcWhatsApp');
+    const calcTelegram = document.getElementById('calcTelegram');
+    const calcTelegramNotice = document.getElementById('calcTelegramNotice');
 
     const cargoRates = {
       china: 4.1,
@@ -357,7 +381,6 @@
       const service = calcService.value;
       let total = 0;
       let details = '';
-      let message = '';
       let unavailable = false;
 
       calcUnavailable.style.display = 'none';
@@ -369,7 +392,7 @@
         const kg = numberValue(calcQuantity);
         const rate = numberValue(calcRate);
         const price = cargoRates[service];
-        const name = service === 'china' ? 'Карго из Китая' : 'Карго из США';
+        const name = service === 'china' ? 'Логистика из Китая' : 'Логистика из США';
         const currency = service === 'china' ? '4,1 $/кг' : '17 $/кг';
 
         quantityLabel.textContent = 'Вес товара, кг';
@@ -379,10 +402,6 @@
 
         details = name + ' · ' + kg + ' кг · тариф ' + currency +
           (rate > 0 ? ' · курс ' + rate.toLocaleString('ru-RU') + ' ₸/$' : ' · курс доллара не указан');
-
-        message = 'Здравствуйте! Хочу рассчитать доставку: ' + name +
-          '. Вес: ' + kg + ' кг. Тариф: ' + currency +
-          '. Курс доллара: ' + (rate || 'не указан') + '. Подскажите итоговую стоимость.';
 
       } else if (service === 'buyer') {
         const amount = numberValue(buyerAmount);
@@ -395,9 +414,6 @@
         details = 'Услуга байера · стоимость товара: ' +
           formatTenge(amount) + ' · комиссия: 15%';
 
-        message = 'Здравствуйте! Хочу воспользоваться услугой байера. Стоимость товара: ' +
-          formatTenge(amount) + '. Подскажите подробности.';
-
       } else {
         quantityLabel.textContent = 'Вес товара, кг';
         quantityHint.textContent = 'Тариф для этого направления уточняется.';
@@ -405,8 +421,7 @@
         calcUnavailable.style.display = 'block';
         total = 0;
 
-        details = 'Карго из Европы, Кореи или Японии · тариф уточняется индивидуально.';
-        message = 'Здравствуйте! Хочу узнать тарифы и условия доставки из Европы, Кореи или Японии.';
+        details = 'Логистика из Европы, Кореи или Японии · тариф уточняется индивидуально.';
       }
 
       if (unavailable) {
@@ -416,7 +431,21 @@
       }
 
       calcDetails.textContent = details;
-      calcWhatsApp.href = 'https://wa.me/77051624947?text=' + encodeURIComponent(message);
+      const serviceName = service === 'china' ? 'Логистика из Китая' :
+        service === 'usa' ? 'Логистика из США' :
+        service === 'buyer' ? 'Услугу байера' :
+        'Доставку из Европы, Кореи или Японии';
+      const telegramMessage = 'Здравствуйте! Хочу заказать ' + serviceName + '.\n' +
+        details + '\n' +
+        'Сумма по калькулятору: ' + calcTotal.textContent;
+      
+      calcTelegram.onclick = function() {
+        navigator.clipboard.writeText(telegramMessage).then(function() {
+          calcTelegramNotice.style.display = 'block';
+        }).catch(function() {
+          console.error('Ошибка копирования текста');
+        });
+      };
     }
 
     [calcService, calcQuantity, calcRate, buyerAmount].forEach(function (element) {
@@ -429,17 +458,17 @@
     // Квиз: подбор услуги
     const services = {
       china: {
-        name: 'Карго из Китая',
+        name: 'Логистика из Китая',
         price: '4,1 $/кг',
-        reason: 'Вы хотите доставить покупки из Китая. Для этого направления предусмотрена карго-доставка по тарифу 4,1 $ за килограмм. Для оптовых клиентов тариф уточняется индивидуально.'
+        reason: 'Вы хотите доставить покупки из Китая. Для этого направления предусмотрена логистика по тарифу 4,1 $ за килограмм. Для оптовых клиентов тариф уточняется индивидуально.'
       },
       usa: {
-        name: 'Карго из США',
+        name: 'Логистика из США',
         price: '17 $/кг',
         reason: 'Ваши ответы указывают на доставку товаров из Америки. Тариф составляет 17 $ за килограмм. Оплата в тенге рассчитывается по курсу, который нужно уточнить.'
       },
       other: {
-        name: 'Карго из Европы, Кореи и Японии',
+        name: 'Логистика из Европы, Кореи и Японии',
         price: 'Тариф уточнить',
         reason: 'Вам нужна доставка из Европы, Кореи или Японии. Мы поможем уточнить тариф, сроки и условия перевозки. Для оптовых клиентов стоимость рассчитывается индивидуально.'
       },
@@ -490,6 +519,7 @@
     const progressFill = document.getElementById('progressFill');
     const questionText = document.getElementById('questionText');
     const answerButtons = document.getElementById('answerButtons');
+    const quizTelegramNotice = document.getElementById('quizTelegramNotice');
 
     function showQuestion() {
       const question = questions[currentQuestion];
@@ -524,10 +554,19 @@
     }
 
     function showResult() {
-      let maxVotes = Math.max(...Object.values(votes));
-      const leaders = Object.keys(votes).filter(function (key) {
-        return votes[key] === maxVotes;
-      });
+      let maxVotes = 0;
+      for (const service in votes) {
+        if (votes[service] > maxVotes) {
+          maxVotes = votes[service];
+        }
+      }
+      
+      const leaders = [];
+      for (const service in votes) {
+        if (votes[service] === maxVotes) {
+          leaders.push(service);
+        }
+      }
 
       // При равенстве голосов выбирается услуга байера
       const winner = leaders.length > 1 ? 'buyer' : leaders[0];
@@ -538,11 +577,16 @@
       document.getElementById('resultPrice').textContent = service.price;
       document.getElementById('resultReason').textContent = service.reason;
 
-      const message = 'Здравствуйте! Я прошел(а) подбор услуг на сайте Fashion Post Corporation. Мне подходит: ' +
-        service.name + '. Подскажите, пожалуйста, подробности и условия.';
+      const telegramText = 'Здравствуйте! Подбор на сайте посоветовал мне услугу "' + service.name + '". Хочу узнать подробнее';
 
-      document.getElementById('resultWhatsApp').href =
-        'https://wa.me/77051624947?text=' + encodeURIComponent(message);
+      const resultTelegram = document.getElementById('resultTelegram');
+      resultTelegram.onclick = function() {
+        navigator.clipboard.writeText(telegramText).then(function() {
+          quizTelegramNotice.style.display = 'block';
+        }).catch(function() {
+          console.error('Ошибка копирования текста');
+        });
+      };
 
       quizCard.style.display = 'none';
       quizResult.style.display = 'block';
@@ -551,6 +595,7 @@
     function restartQuiz() {
       currentQuestion = 0;
       votes = { china:0, usa:0, other:0, buyer:0 };
+      quizTelegramNotice.style.display = 'none';
       quizResult.style.display = 'none';
       quizCard.style.display = 'block';
       showQuestion();
